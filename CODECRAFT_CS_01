@@ -1,0 +1,34 @@
+Create a Python program that can encrypt and decrypt text using the Caesar Cipher algorithm.
+Allow users to:
+Input a message, Input a shift value
+Use these to perform:
+Encryption of the message
+Decryption back to the original text
+
+CODE:-
+
+def encrypt(text, shift):
+    result = ""
+    for char in text:
+        if char.isalpha():
+            base = ord('A') if char.isupper() else ord('a')
+            shifted = (ord(char) - base + shift) % 26 + base
+            result += chr(shifted)
+        else:
+            result += char
+    return result
+
+def decrypt(text, shift):
+    return encrypt(text, -shift)
+
+# --- User Input ---
+message = input("Enter your message: ")
+shift_value = int(input("Enter shift value: "))
+
+# --- Encryption ---
+encrypted_msg = encrypt(message, shift_value)
+print("\nEncrypted Message:", encrypted_msg)
+
+# --- Decryption ---
+decrypted_msg = decrypt(encrypted_msg, shift_value)
+print("Decrypted Message:", decrypted_msg)
