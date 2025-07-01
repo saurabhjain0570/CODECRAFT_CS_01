@@ -1,0 +1,40 @@
+Build a tool that assesses the strength of a password based on criteria such as length, presence of uppercase and lowercase letters, numbers, and special characters. Provide feedback to users on the password's strength.
+
+CODE:-
+
+import re
+
+def check_password_strength(password):
+    length = len(password) >= 8
+    upper = re.search(r'[A-Z]', password) is not None
+    lower = re.search(r'[a-z]', password) is not None
+    digit = re.search(r'[0-9]', password) is not None
+    special = re.search(r'[!@#$%^&*(),.?":{}|<>]', password) is not None
+
+    score = sum([length, upper, lower, digit, special])
+
+    # Feedback
+    print("\n🔎 Password Strength Check:")
+    if not length:
+        print("❌ Password should be at least 8 characters.")
+    if not upper:
+        print("❌ Add at least one uppercase letter.")
+    if not lower:
+        print("❌ Add at least one lowercase letter.")
+    if not digit:
+        print("❌ Include at least one number.")
+    if not special:
+        print("❌ Use at least one special character.")
+
+    # Strength rating
+    print("\n💡 Password Strength:")
+    if score == 5:
+        print("✅ Strong")
+    elif 3 <= score < 5:
+        print("⚠️ Moderate")
+    else:
+        print("❌ Weak")
+
+# --- Run Tool ---
+user_password = input("Enter your password to check: ")
+check_password_strength(user_password)
