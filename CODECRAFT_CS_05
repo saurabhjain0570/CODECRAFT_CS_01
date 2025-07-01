@@ -1,0 +1,27 @@
+Develop a packet sniffer tool that captures and analyzes network packets. Display relevant information such as source and destination IP addresses, protocols, and payload data. Ensure the ethical use of the tool for educational purposes.
+
+CODE:-(pip install scapy)from scapy.all import sniff, IP, TCP, UDP
+
+def process_packet(packet):
+    if IP in packet:
+        ip_layer = packet[IP]
+        src_ip = ip_layer.src
+        dst_ip = ip_layer.dst
+        proto = ip_layer.proto
+
+        print(f"\n📡 New Packet:")
+        print(f"🔹 Source IP      : {src_ip}")
+        print(f"🔹 Destination IP : {dst_ip}")
+        print(f"🔹 Protocol       : {proto}")
+
+        # Display payload if TCP or UDP
+        if packet.haslayer(TCP) or packet.haslayer(UDP):
+            raw_data = bytes(packet[TCP].payload) if TCP in packet else bytes(packet[UDP].payload)
+            if raw_data:
+                print(f"🔸 Payload: {raw_data[:50]}...")
+
+# Start sniffing (first 10 packets or Ctrl+C to stop manually)
+print("📶 Starting packet capture... Press Ctrl+C to stop.\n")
+sniff(prn=process_packet, count=10)
+
+
